@@ -107,7 +107,7 @@ def Junction(Options, Parent):
     print('\nChoose your direction by typing',end= ' ')
     for x in Options:
         print(x.upper(), end = ' ')
-
+    print('')
     a = Verify(Options)
     if a == 'LEFT':
         print('Going left...')
@@ -123,12 +123,14 @@ def Junction(Options, Parent):
     return a
         
 def J1():
-    delay_print('You arrive at the first junction\n')
+    delay_print('Your head feels groggy as you open your eyes\n')
+    delay_print('You look around to find yourself surrounded by thick concrete walls\n')
+    delay_print('You are in a maze and with only one option, you begin to walk...\n')
     x = Junction(['LEFT','RIGHT'],J1)
     if x == 'LEFT':
-        Dead_End(J3)
-    elif x == 'STRAIGHT':
-        Dead_End(J3)
+        J3()
+    else:
+        J2()
 
 def J3():
     x = Junction(['LEFT','STRAIGHT','BACK'],J1)
