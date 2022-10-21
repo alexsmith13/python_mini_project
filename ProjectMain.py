@@ -70,6 +70,9 @@ def Verify(options):
         x = input()
         if x in options:
             break
+        if x == 'QUIT':
+            quit()
+            break
         print('Try again with a valid input')
     return x
 
@@ -98,12 +101,13 @@ def Dead_End(x):
 
 def Junction(Options, Parent):
     Junction_Text()
-    if len(Options) > 2:
-        print('You can go ' + str(Options[0]) + ', ' + str(Options[1]) + ' or ' + str(Options[2]))
-        print('Choose your direction by typing ' + str(Options[0]).upper() + ', ' + str(Options[1]).upper() + ' or ' + str(Options[2].upper()))
-    else:
-        print('You can go ' + str(Options[0]) + ' or ' + str((Options[1])))
-        print('Choose your direction by typing ' + str(Options[0]).upper() + ' or ' + str(Options[1]).upper())
+    print('You can go',end = ' ')
+    for x in Options:
+        print(x, end=' ')
+    print('\nChoose your direction by typing',end= ' ')
+    for x in Options:
+        print(x.upper(), end = ' ')
+
     a = Verify(Options)
     if a == 'LEFT':
         print('Going left...')
@@ -118,112 +122,49 @@ def Junction(Options, Parent):
         Back(Parent)
     return a
         
-
 def J1():
     delay_print('You arrive at the first junction\n')
-    print('You can go left or right.')
-    print('Choose your direction by typing LEFT or RIGHT')
-    a = Verify(['LEFT','RIGHT'])
-    if a == 'LEFT':
-        print('Going left...')
-        Walking()
-        J3()
-    else:
-        print('Going right...')
-        Walking()
-        J2()
-
-def J3():
-    x = Junction(['LEFT','STRAIGHT'],J1)
+    x = Junction(['LEFT','RIGHT'],J1)
     if x == 'LEFT':
         Dead_End(J3)
     elif x == 'STRAIGHT':
         Dead_End(J3)
 
-def J3_():
-    Junction_Text()
-    print('You can go left or straight')
-    print('Choose your direction by typing LEFT or STRAIGHT (or BACK)')
-    direction = Verify(['LEFT','STRAIGHT','BACK'])
-    if direction == 'LEFT':
-        print('Going left...')
-        Walking()
+def J3():
+    x = Junction(['LEFT','STRAIGHT','BACK'],J1)
+    if x == 'LEFT':
         Dead_End(J3)
-    elif direction == 'STRAIGHT':
-        print('Going straight...')
-        Walking()
+    elif x == 'STRAIGHT':
         Dead_End(J3)
-    else:
-       Back(J1)
-    
+
 def J2():
-    Junction_Text()
-    print('You can go left or straight')
-    print('Choose your direction by typing LEFT or STRAIGHT')
-    direction = Verify(['LEFT','STRAIGHT','BACK'])
-    if direction == 'LEFT':
-        print('Going left...')
-        Walking()
+    x = Junction(['LEFT','STRAIGHT','BACK'],J1)
+    if x == 'LEFT':
         J4()
-    elif direction == 'STRAIGHT':
-        print('Going straight...')
-        Walking()
+    elif x == 'STRAIGHT':
         Dead_End(J2)
-    else:
-        Back(J1)
-        
+
 def J4():
-    Junction_Text()
-    print('You can go left,straight or right.')
-    print('Choose your direction by typing LEFT or STRAIGHT or RIGHT')
-    direction = Verify(['LEFT','STRAIGHT','RIGHT','BACK'])
-    if direction == 'LEFT':
-        print('Going left...')
-        Walking()
+    x = Junction(['LEFT','STRAIGHT','RIGHT','BACK'],J2)
+    if x == 'LEFT':
         Dead_End(J4)
-    elif direction == 'STRAIGHT':
-        print('Going straight...')
-        Walking()
+    elif x == 'STRAIGHT':
         J6()
-    elif direction == 'RIGHT':
-        print('Going right...')
-        Walking()
-        Dead_End(J4)
-    else:
-        Back(J1)
-        
+    elif x == 'RIGHT':
+        J5()
+ 
 def J5():
-    Junction_Text()
-    print('You can go left or right.')
-    print('Choose your direction by typing LEFT or RIGHT')
-    direction = Verify(['LEFT','RIGHT','BACK'])
-    if direction == 'LEFT':
-        print('Going left...')
-        Walking()
+    x = Junction(['LEFT','RIGHT','BACK'],J4)
+    if x == 'LEFT':
         Dead_End(J5)
-    elif direction == 'RIGHT':
-        print('Going right...')
-        Walking()
+    elif x == 'RIGHT':
         Dead_End(J5)
-    else:
-        Back(J4)
 
 def J6():
-    Junction_Text()
-    print('You can go straight or right.')
-    print('Choose your direction by typing STRAIGHT or RIGHT')
-    direction = Verify(['STRAIGHT','RIGHT','BACK'])
-    if direction == 'STRAIGHT':
-        print('Going straight...')
-        Walking()
+    x = Junction(['STRAIGHT','RIGHT','BACK'],J2)
+    if x == 'STRAIGHT':
         Dead_End(J6)
-    elif direction == 'RIGHT':
-        print('Going right...')
-        Walking()
+    elif x == 'RIGHT':
         Win()
-    elif direction == 'BACK':
-        Back(J4)
-    else:
-        print('Invalid input. Please enter a valid direction')
 
 Welcome()
