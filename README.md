@@ -47,3 +47,6 @@ If R > WIN
 
 Add verifier: function that takes the direction options and returns whether or not the input is valid given the options.
 Can reuse for each junction
+
+Deliverable:
+I have used all required areas of python to complete the project: while loops, for loops, variables, conditionals, user input etc. 
